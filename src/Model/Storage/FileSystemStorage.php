@@ -2,6 +2,12 @@
 
 namespace Panosmits\Basekit\Model\Storage;
 
+use Exception;
+use League\Flysystem\Filesystem;
+use League\Flysystem\Local\LocalFilesystemAdapter;
+use Ramsey\Uuid\Uuid;
+use Throwable;
+
 class FileSystemStorage implements StorageInterface
 {
     public const STORAGE_NAME = 'FileSystem';
@@ -11,9 +17,21 @@ class FileSystemStorage implements StorageInterface
         return new FileSystemStorage();
     }
 
-    public function save($file): string
+    /**
+     * @throws Exception
+     */
+    public function save(string $filePath): void
     {
-        // TODO: Implement save() method.
-        return 'Saving in FileSystemStorage';
+        $destinationPath = __DIR__.'/../../../storage/';
+        try {
+            if (!is_dir($destinationPath)) {
+                if (!mkdir($destinationPath, 0777, true)) {
+                    throw new Exception('Unable to create storage directory.');
+                }
+            }
+            file_put_contents($destinationPath . Uuid::uuid4() . '.png', file_get_contents($filePath));
+        } catch (Throwable $exception) {
+            throw new Exception($exception->getMessage(), $exception->getCode());
+        }
     }
 }

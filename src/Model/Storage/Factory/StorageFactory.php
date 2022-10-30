@@ -1,6 +1,10 @@
 <?php
 
-namespace Panosmits\Basekit\Model\Storage;
+namespace Panosmits\Basekit\Model\Storage\Factory;
+
+use Panosmits\Basekit\Model\Storage\FileSystemStorage;
+use Panosmits\Basekit\Model\Storage\StorageEnum;
+use Panosmits\Basekit\Model\Storage\StorageInterface;
 
 class StorageFactory
 {

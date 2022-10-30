@@ -16,6 +16,7 @@
         "symfony/console": "^6.1",
         "php-di/php-di": "^6.4",
         "monolog/monolog": "^3.2",
-        "league/flysystem": "^3.0"
+        "league/flysystem": "^3.0",
+        "ramsey/uuid": "^4.5"
     }
 }
