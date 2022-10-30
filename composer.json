@@ -1,0 +1,21 @@
+{
+    "name": "panosmits/basekit",
+    "description": "Technical Task for BaseKit",
+    "autoload": {
+        "psr-4": {
+            "Panosmits\\Basekit\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "PanosMits",
+            "email": "panag.mitseas@gmail.com"
+        }
+    ],
+    "require": {
+        "symfony/console": "^6.1",
+        "php-di/php-di": "^6.4",
+        "monolog/monolog": "^3.2",
+        "league/flysystem": "^3.0"
+    }
+}
