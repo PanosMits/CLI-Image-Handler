@@ -2,3 +2,4 @@
 .idea/
 app.log
 /storage
+.env

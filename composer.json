@@ -17,6 +17,7 @@
         "php-di/php-di": "^6.4",
         "monolog/monolog": "^3.2",
         "league/flysystem": "^3.0",
-        "ramsey/uuid": "^4.5"
+        "ramsey/uuid": "^4.5",
+        "vlucas/phpdotenv": "^5.5"
     }
 }

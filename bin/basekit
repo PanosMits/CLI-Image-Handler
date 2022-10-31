@@ -7,6 +7,10 @@ use DI\ContainerBuilder;
 use Panosmits\Basekit\Command\SaveCommand;
 use Symfony\Component\Console\Application;
 
+// Load Env variables
+$dotenv = Dotenv\Dotenv::createUnsafeImmutable('./');
+$dotenv->safeLoad();
+
 // DI Container
 $containerBuilder = new ContainerBuilder();
 $containerBuilder->addDefinitions(__DIR__.'/../config.php');
