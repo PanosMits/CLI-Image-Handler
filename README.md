@@ -62,3 +62,9 @@ $ ./basekit [command] [options]
             - ./basekit retrieve image_id --storage=S3 (Will retrieve image with ID image_id_here from S3 if integrated, if not it will return error message)
 
 Can also view the required fields and available options for a command by typing `./basekit [command] --help`
+
+## Adding a new Storage Service integration
+- Create a new Storage class and implement `StorageInterface`
+- Add a new case for the new Storage in `StorageEnum`
+- Add a new check for the new Storage in `StorageFactory` `(e.g. if ($lowerCaseStorage === strtolower(StorageEnum::MY_NEW_STORAGE->value)) return MyNewStorage::make())`
+
