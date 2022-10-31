@@ -38,15 +38,25 @@ class FileSystemStorage implements StorageInterface
                     throw new Exception('Unable to create storage directory.');
                 }
             }
-            file_put_contents($destinationPath . $imageUuid . '.png', file_get_contents($filePath));
+            file_put_contents($destinationPath . $imageUuid . getenv('IMAGE_FORMAT'), file_get_contents($filePath));
             return $imageUuid;
         } catch (Throwable $exception) {
             throw new Exception($exception->getMessage(), $exception->getCode());
         }
     }
 
+    /**
+     * @param string $imageId
+     * @return void
+     * @throws Exception
+     */
     public function delete(string $imageId): void
     {
-        // TODO: Implement delete() method.
+        $imagePath = __DIR__.getenv('LOCAL_DIRECTORY') . '/' . $imageId . getenv('IMAGE_FORMAT');
+        try {
+            $imagePath ? unlink($imagePath) : throw new Exception('Image not found in ' . $this->name, 404);
+        } catch (Throwable $exception) {
+            throw new Exception($exception->getMessage(), $exception->getCode());
+        }
     }
 }

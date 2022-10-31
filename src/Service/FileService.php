@@ -40,6 +40,12 @@ class FileService
         }
     }
 
+    /**
+     * @param string $imageId The ID of the image we are trying to delete
+     * @param string $fromStorage The storage we want to delete the image from
+     * @return void
+     * @throws Exception
+     */
     public function delete(string $imageId, string $fromStorage): void
     {
         try {

@@ -75,10 +75,10 @@ class DeleteCommand extends Command
 
         try {
             $this->fileService->delete($imageId, $fromStorage);
+            CustomStyler::createFromIO($input, $output)->successful('Image with ID: ' . $imageId . ' successfully deleted.');
             return Command::SUCCESS;
         } catch (Exception $exception) {
             $errorMessage = $exception->getMessage();
-
             CustomStyler::createFromIO($input, $output)->failure('Image could not be deleted. Reason: ' . $errorMessage);
             return Command::FAILURE;
         }
