@@ -23,7 +23,7 @@ class FileService
      * Saves a file
      * @throws Exception
      */
-    public function save(string $filePath, string $storageFromInput): void
+    public function save(string $filePath, string $storageFromInput): string
     {
         try {
             $storage = StorageFactory::createFromInput($storageFromInput);
@@ -31,7 +31,7 @@ class FileService
             // TODO: Perform file validation
 
             $this->myLogger->logger->info('File: $file validated successfully', [FileService::class]);
-            $this->fileRepository->save($filePath, $storage);
+            return $this->fileRepository->save($filePath, $storage);
         } catch (Throwable $exception) {
             // Exception can either be from FileRepository or from File validation failure. Maybe add ->getPrevious() ?
             throw new Exception($exception->getMessage(), $exception->getCode());

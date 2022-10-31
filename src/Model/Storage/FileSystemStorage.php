@@ -20,8 +20,9 @@ class FileSystemStorage implements StorageInterface
     /**
      * @throws Exception
      */
-    public function save(string $filePath): void
+    public function save(string $filePath): string
     {
+        $imageUuid = Uuid::uuid4()->toString();
         $destinationPath = __DIR__.'/../../../storage/';
         try {
             if (!is_dir($destinationPath)) {
@@ -29,7 +30,8 @@ class FileSystemStorage implements StorageInterface
                     throw new Exception('Unable to create storage directory.');
                 }
             }
-            file_put_contents($destinationPath . Uuid::uuid4() . '.png', file_get_contents($filePath));
+            file_put_contents($destinationPath . $imageUuid . '.png', file_get_contents($filePath));
+            return $imageUuid;
         } catch (Throwable $exception) {
             throw new Exception($exception->getMessage(), $exception->getCode());
         }

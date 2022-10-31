@@ -75,9 +75,9 @@ class SaveCommand extends Command
         );
 
         try {
-            $this->fileService->save($filepath, $storage);
+            $imageUuid = $this->fileService->save($filepath, $storage);
             $this->myLogger->logger->info('File: $file successfully saved.', [SaveCommand::class]);
-            CustomStyler::createFromIO($input, $output)->successful('File successfully saved.');
+            CustomStyler::createFromIO($input, $output)->successful('Image successfully saved with id: ' . $imageUuid);
             return Command::SUCCESS;
         } catch (Exception $exception) {
             $errorMessage = $exception->getMessage();
