@@ -5,6 +5,7 @@ require __DIR__.'/../vendor/autoload.php';
 
 use DI\ContainerBuilder;
 use Panosmits\Basekit\Command\DeleteCommand;
+use Panosmits\Basekit\Command\RetrieveCommand;
 use Panosmits\Basekit\Command\SaveCommand;
 use Symfony\Component\Console\Application;
 
@@ -16,11 +17,11 @@ $dotenv->safeLoad();
 $containerBuilder = new ContainerBuilder();
 $containerBuilder->addDefinitions(__DIR__.'/../config.php');
 $container = $containerBuilder->build();
-$saveCommand = $container->get(SaveCommand::class);
 
+// Application
 $application = new Application();
-$application->add($saveCommand);
-// TODO: $application->add($container->get(RetrieveCommand::class));
- TODO: $application->add($container->get(DeleteCommand::class));
+$application->add($container->get(SaveCommand::class));
+$application->add($container->get(DeleteCommand::class));
+$application->add($container->get(RetrieveCommand::class));
 
 $application->run();

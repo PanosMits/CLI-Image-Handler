@@ -61,4 +61,22 @@ class FileSystemStorage implements StorageInterface
             throw new Exception($exception->getMessage(), $exception->getCode());
         }
     }
+
+    /**
+     * @param string $imageId
+     * @return string
+     * @throws Exception
+     */
+    public function retrieve(string $imageId): string
+    {
+        $imagePath = __DIR__.getenv('LOCAL_DIRECTORY') . '/' . $imageId . getenv('IMAGE_FORMAT');
+        try {
+            if (file_exists($imagePath)) {
+                return file_get_contents($imagePath) ?: throw new Exception('Image could not be retrieved.');
+            }
+            throw new Exception('Image with ID: ' . $imageId . ' not found in ' . $this->name, 404);
+        } catch (Throwable $exception) {
+            throw new Exception($exception->getMessage(), $exception->getCode());
+        }
+    }
 }

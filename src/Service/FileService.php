@@ -54,4 +54,19 @@ class FileService
             throw new Exception($exception->getMessage(), $exception->getCode());
         }
     }
+
+    /**
+     * @param string $imageId The ID of the image we are trying to retrieve
+     * @param string $fromStorage The storage we want to retrieve the image from
+     * @return string
+     * @throws Exception
+     */
+    public function retrieve(string $imageId, string $fromStorage): string
+    {
+        try {
+            return $this->fileRepository->retrieve($imageId, StorageFactory::createFromInput($fromStorage));
+        } catch (Exception $exception) {
+            throw new Exception($exception->getMessage(), $exception->getCode());
+        }
+    }
 }

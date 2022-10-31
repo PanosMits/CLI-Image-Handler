@@ -70,4 +70,34 @@ class FileRepository
             throw new Exception($exceptionMessage, $exception->getCode());
         }
     }
+
+    /**
+     * @param string $imageId
+     * @param StorageInterface $storage
+     * @return void
+     * @throws Exception
+     */
+    public function retrieve(string $imageId, StorageInterface $storage): string
+    {
+        $this->myLogger->logger->info(
+            'Attempting to retrieve image with ID: ' . $imageId . ' from ' . $storage->getName(),
+            [FileRepository::class]
+        );
+
+        try {
+            $file = $storage->retrieve($imageId);
+            $this->myLogger->logger->info(
+                'Image with ID: ' . $imageId . ' successfully retrieved.',
+                [FileRepository::class]
+            );
+            return $file;
+        } catch (Throwable $exception) {
+            $exceptionMessage = $exception->getMessage();
+            $this->myLogger->logger->error(
+                'Error occurred while retrieving image with ID: ' . $imageId . ' Message: ' . $exceptionMessage,
+                [FileRepository::class]
+            );
+            throw new Exception($exceptionMessage, $exception->getCode());
+        }
+    }
 }
