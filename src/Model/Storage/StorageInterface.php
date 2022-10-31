@@ -8,5 +8,5 @@ interface StorageInterface
     public function getName(): string;
     public function save(string $filePath): string;
 //    public function retrieve($file): string;
-//    public function delete($file): string;
+    public function delete(string $imageId): void;
 }

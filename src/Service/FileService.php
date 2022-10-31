@@ -20,7 +20,9 @@ class FileService
     }
 
     /**
-     * Saves a file
+     * @param string $filePath The URL of the image
+     * @param string $storageFromInput The storage option provided by the user
+     * @return string The UUID assigned to the image after a successful save
      * @throws Exception
      */
     public function save(string $filePath, string $storageFromInput): string
@@ -34,6 +36,15 @@ class FileService
             return $this->fileRepository->save($filePath, $storage);
         } catch (Throwable $exception) {
             // Exception can either be from FileRepository or from File validation failure. Maybe add ->getPrevious() ?
+            throw new Exception($exception->getMessage(), $exception->getCode());
+        }
+    }
+
+    public function delete(string $imageId, string $fromStorage): void
+    {
+        try {
+            $this->fileRepository->delete($imageId, StorageFactory::createFromInput($fromStorage));
+        } catch (Exception $exception) {
             throw new Exception($exception->getMessage(), $exception->getCode());
         }
     }

@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class SaveCommand extends Command
+class DeleteCommand extends Command
 {
     /**
      * @var FileService
@@ -29,58 +29,57 @@ class SaveCommand extends Command
      * The command description
      * @var string
      */
-    protected static $defaultDescription = 'Save the file';
+    protected static $defaultDescription = 'Delete the file';
 
-    public function __construct(FileService $fileService, MyLogger $logger)
-    {
-        parent::__construct('save');
-        $this->fileService = $fileService;
-        $this->myLogger = $logger;
-    }
+        public function __construct(FileService $fileService, MyLogger $logger)
+        {
+            parent::__construct('delete');
+            $this->fileService = $fileService;
+            $this->myLogger = $logger;
+        }
 
     protected function configure(): void
     {
         $this->addArgument(
-            'image_path',
+            'image_id',
             InputArgument::REQUIRED,
-            'The path of the image you want to store.'
+            'The ID of the image you want to delete.'
         )->addOption(
-            'storage',
+            'fromStorage',
             null,
             InputOption::VALUE_OPTIONAL,
-            'The storage you want to store the image. Defaults to ' . StorageEnum::DEFAULT_STORAGE->value,
+            'The storage you want to delete the image from. Defaults to ' . StorageEnum::DEFAULT_STORAGE->value,
             StorageEnum::DEFAULT_STORAGE->value
         );
     }
 
     /**
-     * Execute the command
-     *
-     * @param  InputInterface  $input
-     * @param  OutputInterface $output
+     * Execute the delete command
+     * @param InputInterface $input
+     * @param OutputInterface $output
      * @return int 0 if everything went fine, or an exit code.
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $filepath = $input->getArgument('image_path');
-        $storage = $input->getOption('storage');
+        $imageId = $input->getArgument('image_id');
+        $fromStorage = $input->getOption('fromStorage');
         $this->myLogger->logger->info(
-            'Initiating process of saving image from ' . $filepath . ' to ' . $storage,
+            'Initiating process of deleting image with ID:  ' . $imageId . ' from ' . $fromStorage,
             [SaveCommand::class]
         );
 
-        if (!StorageEnum::valueExists($storage)) {
+        if (!StorageEnum::valueExists($fromStorage)) {
             CustomStyler::createFromIO($input, $output)->failure('Storage provided is not supported.');
             return Command::FAILURE;
         }
 
         try {
-            $imageUuid = $this->fileService->save($filepath, $storage);
-            CustomStyler::createFromIO($input, $output)->successful('Image successfully saved with id: ' . $imageUuid);
+            $this->fileService->delete($imageId, $fromStorage);
             return Command::SUCCESS;
         } catch (Exception $exception) {
             $errorMessage = $exception->getMessage();
-            CustomStyler::createFromIO($input, $output)->failure('File could not be saved. Reason: ' . $errorMessage);
+
+            CustomStyler::createFromIO($input, $output)->failure('Image could not be deleted. Reason: ' . $errorMessage);
             return Command::FAILURE;
         }
     }

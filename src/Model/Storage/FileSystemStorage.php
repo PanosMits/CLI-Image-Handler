@@ -44,4 +44,9 @@ class FileSystemStorage implements StorageInterface
             throw new Exception($exception->getMessage(), $exception->getCode());
         }
     }
+
+    public function delete(string $imageId): void
+    {
+        // TODO: Implement delete() method.
+    }
 }
