@@ -54,7 +54,9 @@ class FileSystemStorage implements StorageInterface
     {
         $imagePath = __DIR__.getenv('LOCAL_DIRECTORY') . '/' . $imageId . getenv('IMAGE_FORMAT');
         try {
-            $imagePath ? unlink($imagePath) : throw new Exception('Image not found in ' . $this->name, 404);
+            file_exists($imagePath) ?
+                unlink($imagePath) :
+                throw new Exception('Image not found in ' . $this->name, 404);
         } catch (Throwable $exception) {
             throw new Exception($exception->getMessage(), $exception->getCode());
         }
