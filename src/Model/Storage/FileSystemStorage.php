@@ -56,7 +56,7 @@ class FileSystemStorage implements StorageInterface
         try {
             file_exists($imagePath) ?
                 unlink($imagePath) :
-                throw new Exception('Image not found in ' . $this->name, 404);
+                throw new Exception('Image with ID: ' . $imageId . ' not found in ' . $this->name, 404);
         } catch (Throwable $exception) {
             throw new Exception($exception->getMessage(), $exception->getCode());
         }
