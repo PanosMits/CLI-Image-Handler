@@ -17,25 +17,25 @@ class FileRepository
     }
 
     /**
-     * @param string $filePath
+     * @param string $filepath
      * @param StorageInterface $storage
      * @return string
      * @throws Exception
      */
-    public function save(string $filePath, StorageInterface $storage): string
+    public function save(string $filepath, StorageInterface $storage): string
     {
         $this->myLogger->logger->info(
-            'Attempting to save file: ' . $filePath . ' in ' . $storage->getName(),
+            'Attempting to save file: ' . $filepath . ' in ' . $storage->getName(),
             [FileRepository::class]
         );
 
         try {
-            $imageId = $storage->save($filePath);
+            $imageId = $storage->save($filepath);
             $this->myLogger->logger->info('Image successfully saved with ID: ' . $imageId, [FileRepository::class]);
             return $imageId;
         } catch (Throwable $exception) {
             $this->myLogger->logger->error(
-                'Error occurred while saving file: ' . $filePath . ' Message: ' . $exception->getMessage(),
+                'Error occurred while saving file: ' . $filepath . ' Message: ' . $exception->getMessage(),
                 [FileRepository::class]
             );
             throw new Exception($exception->getMessage(), $exception->getCode());
@@ -74,7 +74,7 @@ class FileRepository
     /**
      * @param string $imageId
      * @param StorageInterface $storage
-     * @return void
+     * @return string
      * @throws Exception
      */
     public function retrieve(string $imageId, StorageInterface $storage): string
