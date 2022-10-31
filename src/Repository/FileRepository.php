@@ -16,7 +16,10 @@ class FileRepository
 
     public function save(string $filePath, StorageInterface $storage): string
     {
-        $this->myLogger->logger->info('Attempting to save file: ' . $filePath . ' in ' . $storage::STORAGE_NAME, [FileRepository::class]);
+        $this->myLogger->logger->info(
+            'Attempting to save file: ' . $filePath . ' in ' . $storage->getName(),
+            [FileRepository::class]
+        );
         return $storage->save($filePath);
     }
 }

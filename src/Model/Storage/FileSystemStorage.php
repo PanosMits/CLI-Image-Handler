@@ -3,18 +3,26 @@
 namespace Panosmits\Basekit\Model\Storage;
 
 use Exception;
-use League\Flysystem\Filesystem;
-use League\Flysystem\Local\LocalFilesystemAdapter;
 use Ramsey\Uuid\Uuid;
 use Throwable;
 
 class FileSystemStorage implements StorageInterface
 {
-    public const STORAGE_NAME = 'FileSystem';
+    private string $name;
+
+    public function __construct(string $name = 'FileSystem')
+    {
+        $this->name = $name;
+    }
 
     public static function make(): FileSystemStorage
     {
         return new FileSystemStorage();
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     /**
